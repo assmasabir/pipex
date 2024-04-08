@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/03/27 21:01:19 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/08 18:26:55 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char *find_path(char **en)
 int is_cmd_found(char **path_cmd, char *str, char *cmd)
 {
 	char **path;
+	char *join;
+	char *temp;
 
 	int i;
 
@@ -37,12 +39,14 @@ int is_cmd_found(char **path_cmd, char *str, char *cmd)
 	{
 		while (str[i])
 		{
-			if (access(path[i], F_OK))
+			temp = ft_strjoin("/", cmd);
+			join = ft_strjoin(path[i], temp);	
+			if (access(join, F_OK)==0)
 			{
-				*path_cmd = strdup(path[i]);
-				// printf("weeest lfunction %s\n", *path_cmd);
+				*path_cmd = strdup(join);
 				return (0);
 			}
+			i++;
 		}
 	}
 	return (-1);
@@ -58,13 +62,10 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	char *tmp1 = NULL;
 	char *tmp2 = NULL;
-	//(void)argv;
 
+	char *path;
 	char **cmd1 = ft_split(argv[2], ' ');
 	char **cmd2 = ft_split(argv[3], ' ');
-	char *ar1[] = {cmd1[0], NULL};
-	char *ar2[] = {cmd2[0], cmd2[1], NULL};
-	char *path;
 	path = find_path(env);
 	// printf("%s\n", path);
 	if (path == NULL)
@@ -78,12 +79,9 @@ int main(int argc, char **argv, char **env)
 
 	tmp1 = ft_strjoin("/", cmd1[0]);
 	tmp2 = ft_strjoin("/", cmd2[0]);
-	char *path_1 = ft_strjoin(path_cmd1 + 5, tmp1);
-	char *path_2 = ft_strjoin(path_cmd2 + 5, tmp2);
-	// printf("%s path1\n", path_1);
-	// fflush(stdout);
-	// printf("%s path2\n", path_2);
-	// fflush(stdout);
+
+	char *ar1[] = {path_cmd1, NULL};
+	char *ar2[] = {path_cmd2, cmd2[1], NULL};
 	id1 = fork();
 	if (id1 == -1)
 		exit(-1);
@@ -96,12 +94,8 @@ int main(int argc, char **argv, char **env)
 			write(2, "error\n", 6);
 		close(fd[1]);
 		close(file_in);
-		// write(2, ar1[0], 3);
 
-		if (execve(path_1, ar1, env) == -1)
-			// printf(2"waaaaaaa\n");
-			write(2, "errrrrror\n", 10);
-		write(2, path_1, ft_strlen(path_1));
+		if (execve(path_cmd1, ar1, env) == -1);
 	}
 	id2 = fork();
 	if (id2 == -1)
@@ -118,8 +112,7 @@ int main(int argc, char **argv, char **env)
 			write(2, "error\n", 6);
 		close(file_out);
 		close(fd[0]);
-		execve(path_2, ar2, env);
-		write(2, path_2, ft_strlen(path_2));
+		execve(path_cmd2, ar2, env);
 	}
 	close(fd[0]);
 	close(fd[1]);
