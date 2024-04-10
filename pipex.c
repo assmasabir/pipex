@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/09 18:12:28 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/10 13:43:34 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,9 @@ void child_process(int in_file, int out_file, char *path_cmd, char **cmd_arr)
 		exit(-1);
 	if (id == 0)
 	{
-		// close(fd[0]);
-		
 		dup2(out_file, STDOUT_FILENO);
 		if (dup2(in_file, STDIN_FILENO) == -1)
 			write(2, "error\n", 6);
-		close(out_file);
         
 		execve(path_cmd, cmd_arr, NULL);
 	} 
