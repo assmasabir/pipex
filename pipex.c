@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/10 13:43:34 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/12 16:31:45 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ int main(int argc, char **argv, char **env)
 	char *path_cmd1 = NULL;
 	char *path_cmd2 = NULL;
 	(void)argc;
-
-
 
 	char **cmd1 = return_cmd_arr(&path_cmd1, argv[2], env);
 	char **cmd2 = return_cmd_arr(&path_cmd2, argv[3], env);
