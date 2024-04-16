@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:31:44 by asabir            #+#    #+#             */
-/*   Updated: 2024/03/27 03:11:45 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/16 18:18:02 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int number_of_strings(const char *str, char c)
 	return (len);
 }
 
-static char *ft_strndup(const char *str, int n)
+char *ft_strndup(const char *str, int n)
 {
 	int j;
 	char *dest;
@@ -112,29 +112,4 @@ char **ft_split(const char *s, char c)
 	if (!res)
 		return (NULL);
 	return (res);
-}
-int ft_strlen(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-char *ft_strchr(const char *s, int c)
-{
-	int i;
-
-	i = 0;
-	while (i <= ft_strlen((char *)s))
-	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
-		i++;
-	}
-	return (0);
 }

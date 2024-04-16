@@ -6,109 +6,110 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/12 16:31:45 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/16 23:22:11 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char *find_path(char **en)
+
+void case_1(int (*fd)[2], t_params *tpar, char **argv, int* i)
 {
-	int i = 0;
-	while (en[i])
+	char *initialize;
+
+	initialize = "initializig";
+	if(tpar->path_cmd)
 	{
-		if (strncmp(en[i], "PATH=", 5) == 0)
-			return (en[i]);
-		else
-			i++;
+		free(tpar->path_cmd);
+		tpar->path_cmd = NULL;
 	}
-	return (NULL);
+	fd[tpar->nb_fds][0]= open(argv[1], O_RDONLY);
+	free(tpar->path_cmd);
+	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[2], tpar->env);
+	child_process(fd, fd[tpar->nb_fds][0], fd[*i][1], tpar);
+	clean_up(tpar);
+	tpar->path_cmd = ft_strdup(initialize);
 }
 
-int is_cmd_found(char **path_cmd, char *str, char *cmd)
+void case_2(int (*fd)[2], t_params *tpar, char **argv, int* i)
 {
-	char **path;
-	char *join;
-	char *temp;
-
-	int i;
-
-	i = 0;
-	path = ft_split(str, ':');
-	if (!ft_strchr(cmd, '/'))
+	if(tpar->path_cmd)
 	{
-		while (str[i])
-		{
-			temp = ft_strjoin("/", cmd);
-			join = ft_strjoin(path[i], temp);	
-			if (access(join, F_OK)==0)
-			{
-				*path_cmd = strdup(join);
-				return (0);
-			}
-			i++;
-		}
+		free(tpar->path_cmd);
+		tpar->path_cmd = NULL;
 	}
-	return (-1);
-}
-char **return_cmd_arr(char **path_cmd, char *cmd, char **env)
-{
-    char **arr = ft_split(cmd, ' ');
-    char *path;
+		
+	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i+3], tpar->env);
+	fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds+3], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	child_process(fd, fd[*i][0], fd[tpar->nb_fds][1], tpar);
+	clean_up(tpar);
 
-    path = find_path(env);
-	if (path == NULL)
-		exit(-1);
-	if (is_cmd_found(path_cmd, path, arr[0]))
+}
+
+void case_3(int (*fd)[2], t_params *tpar, char **argv, int* i)
+{
+	char *initialize;
+
+	if(tpar->path_cmd)
+	{
+		free(tpar->path_cmd);
+		tpar->path_cmd = NULL;
+	}
+	initialize = "initializig";
+	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i+3], tpar->env);
+	child_process(fd, fd[*i][0], fd[*i+1][1], tpar);
+	clean_up(tpar);
+	tpar->path_cmd = ft_strdup(initialize);
+}
+
+
+void manage_pipes(int nb_fd ,char **argv, t_params *tpar)
+{
+
+    int fd[nb_fd+1][2];
+    int i;
+	
+    i = 0;
+    while(i < nb_fd)
     {
-		write(2, "error\n", 6);
-        exit(EXIT_FAILURE);
+        if (pipe(fd[i]) == -1)
+		    exit(-1);
+        i++;
     }
-    return (arr);
-}
-
-void child_process(int in_file, int out_file, char *path_cmd, char **cmd_arr)
-{
-    int id;
-
-    id = fork();
-	if (id == -1)
-		exit(-1);
-	if (id == 0)
+	i = 0;
+	
+    while(i < nb_fd)
 	{
-		dup2(out_file, STDOUT_FILENO);
-		if (dup2(in_file, STDIN_FILENO) == -1)
-			write(2, "error\n", 6);
-        
-		execve(path_cmd, cmd_arr, NULL);
-	} 
+		if(i == 0)
+			case_1(fd, tpar,argv,&i);
+		if (i == nb_fd-1)
+			case_2(fd, tpar,argv,&i);
+		if (i != nb_fd-1)
+			case_1(fd, tpar,argv,&i);
+		i++;
+	}
+
 }
 
 int main(int argc, char **argv, char **env)
 {
-	int fd[2];
+	char *str;
+	char *initialize;
 
-	char *path_cmd1 = NULL;
-	char *path_cmd2 = NULL;
-	(void)argc;
-
-	char **cmd1 = return_cmd_arr(&path_cmd1, argv[2], env);
-	char **cmd2 = return_cmd_arr(&path_cmd2, argv[3], env);
-
-	if (pipe(fd) == -1)
-		exit(-1);
-
-	int file_in = open(argv[1], O_RDONLY);
-	child_process(file_in, fd[1], path_cmd1, cmd1);
-    close(file_in);
-	
-	int file_out = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	close(fd[1]);
-	child_process(fd[0], file_out, path_cmd2, cmd2);
-    close(file_out);
-	
-	close(fd[0]);
-	
-	wait(NULL);
-	wait(NULL);
+	str = "Error message : wrong number of arguments!\n";
+	initialize = "initializig";
+	if(argc == 5)
+	{
+		t_params *tpar;
+		tpar = malloc(sizeof(t_params));
+		tpar->cmd = NULL;
+		tpar->path_cmd = ft_strdup(initialize);
+		tpar->nb_fds = argc-4;
+		tpar->env = env;
+		tpar->name_infile = argv[1];
+		manage_pipes(tpar->nb_fds, argv, tpar);
+		free(tpar);
+	}
+	else
+		write(2, str, ft_strlen(str));
 }
