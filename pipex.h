@@ -25,6 +25,7 @@ typedef struct Params
     int  nb_fds;
 	char **env;
 	char *name_infile;
+	int here_doc;
 } t_params;
 
 char	**ft_split(const char *s, char c);

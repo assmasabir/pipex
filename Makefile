@@ -19,7 +19,18 @@ SRC= \
 	pipex.c				\
 	libft_functions.c	\
 	libft_finctions2.c	\
+	pipex_utils_1.c		\
+	pipex_utils_2.c		\
+	pipex_utils_3.c		
 
+SRC2=\
+	pipex_bonus.c		\
+	libft_finctions2.c	\
+	libft_functions.c	\
+	pipex_utils_1.c		\
+	pipex_utils_2.c		\
+	pipex_utils_3.c		\
+	
 OBJ1 = ${SRC:.c = .o}
 
 all

@@ -32,16 +32,18 @@ int manage_here_doc(char **argv)
 	buff = "just initializing";
 	fd = open(argv[0],O_CREAT | O_RDWR  | O_TRUNC, 0644);
 	argv[1] = ft_strjoin(argv[1], "\n");
-	while(buff != NULL &&  ft_strcmp(buff, argv[1]))
+	while(1)
 	{
 		buff = get_next_line(STDIN_FILENO);
 		if(ft_strcmp(buff, argv[1])==0 || buff == NULL )
 		{
 			free(buff);
+			buff = NULL;
 			break;
 		}
 		ft_putstr_fd(buff, fd, argv);
 		free(buff);
+		buff = NULL;
 	}
 	return (fd);
 }

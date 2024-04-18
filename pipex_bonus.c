@@ -23,7 +23,14 @@ void case_1(int (*fd)[2], t_params *tpar, char **argv, int* i)
 		free(tpar->path_cmd);
 		tpar->path_cmd = NULL;
 	}
-	fd[tpar->nb_fds][0]= open(argv[1], O_RDONLY);
+	if(tpar->here_doc == 1)
+	{
+		fd[tpar->nb_fds][0]= manage_here_doc(argv);
+		close(fd[tpar->nb_fds][0]);
+		fd[tpar->nb_fds][0] = open("here_doc",O_CREAT | O_RDWR , 0644);
+	}
+	else
+		fd[tpar->nb_fds][0]= open(argv[1], O_RDONLY);
 	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[2], tpar->env);
 	child_process(fd, fd[tpar->nb_fds][0], fd[*i][1], tpar);
 	clean_up(tpar);
@@ -50,7 +57,7 @@ void case_3(int (*fd)[2], t_params *tpar, char **argv, int* i)
 	if(tpar->path_cmd)
 	{
 		free(tpar->path_cmd);
-		tpar->path_cmd = NULL;
+		tpar->path_cmd = "NULL"; //rje3
 	}
 	initialize = "initializig";
 	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i+3], tpar->env);
@@ -95,14 +102,25 @@ int main(int argc, char **argv, char **env)
 	error_message = "Error message : type at least four agruments";
 	if(argc >= 5)
 	{
-		initialize = "initializig";
 		t_params *tpar;
 		tpar = malloc(sizeof(t_params));
+		if(ft_strcmp(argv[1], "here_doc")==0)
+		{
+			tpar->nb_fds = argc-5;
+			argv++;
+			tpar->name_infile = "NULL"; //rje3
+			tpar->here_doc=1;
+		}
+		else
+		{
+			tpar->nb_fds = argc-4;
+			tpar->name_infile = argv[1]; //DF case of here_doc
+			tpar->here_doc = 0;
+		}
+		initialize = "initializig";
 		tpar->cmd = NULL;
 		tpar->path_cmd = ft_strdup(initialize);
-		tpar->nb_fds = argc-4;
 		tpar->env = env;
-		tpar->name_infile = argv[1]; //DF case of here_doc
 		manage_pipes(tpar->nb_fds, argv, tpar);
 		free(tpar);
 	}
