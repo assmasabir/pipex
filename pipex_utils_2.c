@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:55:14 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 18:47:00 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 21:45:23 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	is_cmd_found(char **path_cmd, char *str, char *cmd)
 	int		i;
 
 	i = 0;
-	join = "NULlL";
 	path = ft_split(str, ':');
 	if (!ft_strchr(cmd, '/'))
 	{
@@ -67,6 +66,8 @@ int	is_cmd_found(char **path_cmd, char *str, char *cmd)
 		}
 		free_matrice(path);
 	}
+	else
+		free_matrice(path);
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 18:48:27 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 22:08:00 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	case_3(int **fd, t_params *tpar, char **argv, int *i)
 	if (tpar->path_cmd)
 	{
 		free(tpar->path_cmd);
-		tpar->path_cmd = "NULL";
+		tpar->path_cmd = NULL;
 	}
 	initialize = "initializig";
 	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i + 3], tpar->env);
@@ -122,4 +122,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	else
 		write(2, error_message, strlen(error_message));
+	while(wait(NULL)!=-1);
 }
