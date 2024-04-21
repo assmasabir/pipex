@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 22:08:00 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 22:32:08 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ void	manage_pipes(int nb_fd, char **argv, t_params *tpar)
 			case_2(fd, tpar, argv, &i);
 		if (i != nb_fd - 1)
 			case_3(fd, tpar, argv, &i);
+		i++;
+	}
+	i = 0;
+	while(fd[i])
+	{
+		close(fd[i][0]);
 		i++;
 	}
 	free_matrice_int(fd);

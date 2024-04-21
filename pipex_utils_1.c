@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:51:30 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 22:09:48 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 22:43:18 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	child_process(int **fd, int in_file, int out_file, t_params *tpar)
 				print_error_and_exit(tpar, fd);
 			}
 		close(in_file);
+		printf("%s\n", tpar->cmd[0]);
 		execve(tpar->path_cmd, tpar->cmd, tpar->env);
 		free_matrice_int(fd);
 		clean_up(tpar);	
