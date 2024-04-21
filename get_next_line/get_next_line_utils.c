@@ -28,8 +28,8 @@ char	*ft_strchr(const char *s, int c)
 	size_t	i;
 
 	i = 0;
-	if(!s)
-		return(0);
+	if (!s)
+		return (0);
 	while (i <= ft_strlen(s))
 	{
 		if (s[i] == (char)c)

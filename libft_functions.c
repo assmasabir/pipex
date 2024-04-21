@@ -12,10 +12,10 @@
 
 #include "pipex.h"
 
-static int number_of_strings(const char *str, char c)
+static int	number_of_strings(const char *str, char c)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = 0;
@@ -33,10 +33,10 @@ static int number_of_strings(const char *str, char c)
 	return (len);
 }
 
-char *ft_strndup(const char *str, int n)
+char	*ft_strndup(const char *str, int n)
 {
-	int j;
-	char *dest;
+	int		j;
+	char	*dest;
 
 	j = 0;
 	if (str == NULL)
@@ -53,9 +53,9 @@ char *ft_strndup(const char *str, int n)
 	return (dest);
 }
 
-static char **freetab(char **tab)
+static char	**freetab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i] != NULL)
@@ -67,11 +67,11 @@ static char **freetab(char **tab)
 	return (NULL);
 }
 
-char **make(const char *s, char **res, char c)
+char	**make(const char *s, char **res, char c)
 {
-	int i;
-	int j;
-	int len;
+	int	i;
+	int	j;
+	int	len;
 
 	i = 0;
 	j = 0;
@@ -95,10 +95,10 @@ char **make(const char *s, char **res, char c)
 	return (res);
 }
 
-char **ft_split(const char *s, char c)
+char	**ft_split(const char *s, char c)
 {
-	char **res;
-	int n;
+	char	**res;
+	int		n;
 
 	if (s == NULL)
 	{

@@ -6,13 +6,13 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:57:41 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/16 00:09:54 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/20 14:26:51 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_putstr_fd(char *s, int fd,char **argv)
+void	ft_putstr_fd(char *s, int fd, char **argv)
 {
 	int	i;
 
@@ -24,22 +24,22 @@ void	ft_putstr_fd(char *s, int fd,char **argv)
 	}
 }
 
-int manage_here_doc(char **argv)
+int	manage_here_doc(char **argv)
 {
-	int fd;
-	char *buff;
-	
+	int		fd;
+	char	*buff;
+
 	buff = "just initializing";
-	fd = open(argv[0],O_CREAT | O_RDWR  | O_TRUNC, 0644);
+	fd = open(argv[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	argv[1] = ft_strjoin(argv[1], "\n");
-	while(1)
+	while (1)
 	{
 		buff = get_next_line(STDIN_FILENO);
-		if(ft_strcmp(buff, argv[1])==0 || buff == NULL )
+		if (ft_strcmp(buff, argv[1]) == 0 || buff == NULL)
 		{
 			free(buff);
 			buff = NULL;
-			break;
+			break ;
 		}
 		ft_putstr_fd(buff, fd, argv);
 		free(buff);
@@ -48,4 +48,29 @@ int manage_here_doc(char **argv)
 	return (fd);
 }
 
+void	close_all(int (*fd)[2], int nb_fd)
+{
+	int	i;
 
+	i = 0;
+	while (i < nb_fd)
+	{
+		if (fd[i][0])
+			close(fd[i][0]);
+	}
+}
+
+void	case_here_doc(t_params *tpar, int argc, char **argv)
+{
+	tpar->nb_fds = argc - 5;
+	argv++;
+	tpar->name_infile = "here_doc";
+	tpar->here_doc = 1;
+}
+
+void	case_normal_file(t_params *tpar, int argc, char **argv)
+{
+	tpar->nb_fds = argc - 4;
+	tpar->name_infile = argv[1];
+	tpar->here_doc = 0;
+}

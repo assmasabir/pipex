@@ -6,16 +6,16 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 02:11:32 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/16 18:29:35 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 12:29:23 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char *allocate(char const *s1, char const *s2)
+char	*allocate(char const *s1, char const *s2)
 {
-	int len;
-	char *res;
+	int		len;
+	char	*res;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
@@ -24,11 +24,11 @@ char *allocate(char const *s1, char const *s2)
 	return (res);
 }
 
-char *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char *res;
-	int i;
-	int j;
+	char	*res;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -52,9 +52,9 @@ char *ft_strjoin(char *s1, char *s2)
 	return (res);
 }
 
-int ft_strlen_matrix(char **str)
+int	ft_strlen_matrix(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -64,10 +64,10 @@ int ft_strlen_matrix(char **str)
 	return (i);
 }
 
-char *ft_strdup(const char *str)
+char	*ft_strdup(const char *str)
 {
-	int j;
-	char *dest;
+	int		j;
+	char	*dest;
 
 	j = 0;
 	if (str == NULL)
@@ -82,4 +82,18 @@ char *ft_strdup(const char *str)
 	}
 	dest[j] = '\0';
 	return (dest);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (-1);
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+	{
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }
