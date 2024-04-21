@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:57:41 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/20 14:26:51 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 15:33:45 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	manage_here_doc(char **argv)
 	return (fd);
 }
 
-void	close_all(int (*fd)[2], int nb_fd)
+void	close_all(int **fd, int nb_fd)
 {
 	int	i;
 

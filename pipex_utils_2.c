@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:55:14 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 12:30:18 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 15:33:45 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	is_cmd_found(char **path_cmd, char *str, char *cmd)
 	return (-1);
 }
 
-void	close_fds(int (*fd)[2], int file_in, int file_out, int nb_fds)
+void	close_fds(int **fd, int file_in, int file_out, int nb_fds)
 {
 	int	i;
 

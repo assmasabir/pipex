@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:33:49 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 12:46:57 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 16:37:08 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
-#define MACR 3
 
 typedef struct Params
 {
@@ -38,13 +36,14 @@ int			ft_strlen_matrix(char **str);
 int			manage_here_doc(char **argv);
 int			ft_strcmp(char *s1, char *s2);
 void		clean_up(t_params *tpar);
-void		child_process(int (*fd)[2], int in_file, int out_file,
-				t_params *tpar);
+void		child_process(int **fd, int in_file, int out_file, t_params *tpar);
 char		**return_cmd_arr(char **path_cmd, char *cmd, char **env);
 char		*find_path(char **en);
-void		close_fds(int (*fd)[2], int file_in, int file_out, int nb_fds);
+void		close_fds(int **fd, int file_in, int file_out, int nb_fds);
 int			is_cmd_found(char **path_cmd, char *str, char *cmd);
 char		*ft_strdup(const char *str);
-void		close_all(int (*fd)[2], int nb_fd);
+void		close_all(int **fd, int nb_fd);
 void		case_here_doc(t_params *tpar, int argc, char **argv);
 void		case_normal_file(t_params *tpar, int argc, char **argv);
+int			**allocate_array(int nb_fd);
+void		free_matrice_int(int **nbr);

@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:51:30 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/20 14:01:19 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 16:29:54 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_error_and_exit(t_params *tpar)
 	exit(EXIT_FAILURE);
 }
 
-void	child_process(int (*fd)[2], int in_file, int out_file, t_params *tpar)
+void	child_process(int **fd, int in_file, int out_file, t_params *tpar)
 {
 	int	id;
 
