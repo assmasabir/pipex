@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 16:41:16 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/21 18:48:27 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,13 @@ void	manage_pipes(int nb_fd, char **argv, t_params *tpar)
 	fd = allocate_array(nb_fd + 1);
 	while (i < nb_fd)
 	{
+		if (pipe(fd[i]) == -1)
+			exit(-1);
+		i++;
+	}
+	i = 0;
+	while (i < nb_fd)
+	{
 		if (i == 0)
 			case_1(fd, tpar, argv, &i);
 		if (i == nb_fd - 1)
@@ -100,7 +107,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		tpar = malloc(sizeof(t_params));
 		if (ft_strcmp(argv[1], "here_doc") == 0)
-			case_here_doc(tpar, argc, argv);
+		{
+			case_here_doc(tpar, argc);
+			argv++;
+		}
 		else
 			case_normal_file(tpar, argc, argv);
 		initialize = "initializig";

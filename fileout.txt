@@ -1,0 +1,9 @@
+/*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
+/*   Created: 2024/03/25 23:31:44 by asabir            #+#    #+#             */
+/*   Updated: 2024/04/16 18:18:02 by asabir           ###   ########.fr       */
+static int	number_of_strings(const char *str, char c)
+static char	**freetab(char **tab)
+	while (tab[i] != NULL)
+		free(tab[i]);
+	free(tab);
+				return (freetab(res));
