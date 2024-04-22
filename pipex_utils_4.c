@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:29:21 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 18:47:05 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/22 20:30:44 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,42 @@ int	**allocate_array(int nb_fd)
 	}
 	fd[i] = NULL;
 	return (fd);
+}
+
+void	hundle_fail_of_dup2(int **fd, t_params *tpar)
+{
+	free_matrice_int(fd);
+	clean_up(tpar);
+	free(tpar);
+	perror(NULL);
+	exit(EXIT_FAILURE);
+}
+
+void	close_fds(int **fd, int file_in, int file_out, int nb_fds)
+{
+	int	i;
+
+	i = 0;
+	while (i <= nb_fds)
+	{
+		if (fd[i][0] == file_in || fd[i][1] == file_out)
+		{
+			if (fd[i][0] == file_in)
+			{
+				close(fd[i][1]);
+				i++;
+			}
+			else if (fd[i][1] == file_out)
+			{
+				close(fd[i][0]);
+				i++;
+			}
+		}
+		else
+		{
+			close(fd[i][0]);
+			close(fd[i][1]);
+			i++;
+		}
+	}
 }

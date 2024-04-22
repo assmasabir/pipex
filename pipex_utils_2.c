@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:55:14 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 22:58:06 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/22 20:31:11 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,67 +41,49 @@ void	free_all2(char *temp, char *join)
 	free(join);
 }
 
+int	search_for_cmd(char **path_cmd, char **path, char *cmd)
+{
+	char	*temp;
+	int		i;
+	char	*join;
+
+	i = 0;
+	while (path[i])
+	{
+		temp = ft_strjoin("/", cmd);
+		join = ft_strjoin(path[i], temp);
+		if (access(join, F_OK | X_OK) == 0)
+		{
+			free_all(temp, join, path, path_cmd);
+			return (0);
+		}
+		free_all2(temp, join);
+		i++;
+	}
+	return (-1);
+}
+
 int	is_cmd_found(char **path_cmd, char *str, char *cmd)
 {
 	char	**path;
-	char	*join;
-	char	*temp;
 	int		i;
 
-	i = 0;
+	i = 1;
 	path = ft_split(str, ':');
 	if (!ft_strchr(cmd, '/'))
 	{
-		while (path[i])
-		{
-			temp = ft_strjoin("/", cmd);
-			join = ft_strjoin(path[i], temp);
-			if (access(join, F_OK | X_OK) == 0)
-			{
-				free_all(temp, join, path, path_cmd);
-				return (0);
-			}
-			free_all2(temp, join);
-			i++;
-		}
+		i = search_for_cmd(path_cmd, path, cmd);
+		if (i == 0)
+			return (0);
 		free_matrice(path);
 	}
 	else if (!access(cmd, F_OK | X_OK))
 	{
 		*path_cmd = ft_strdup(cmd);
 		free_matrice(path);
-		return(0);
+		return (0);
 	}
 	else
 		free_matrice(path);
 	return (-1);
-}
-
-void	close_fds(int **fd, int file_in, int file_out, int nb_fds)
-{
-	int	i;
-
-	i = 0;
-	while (i <= nb_fds)
-	{
-		if (fd[i][0] == file_in || fd[i][1] == file_out)
-		{
-			if (fd[i][0] == file_in)
-			{
-				close(fd[i][1]);
-				i++;
-			}
-			else if (fd[i][1] == file_out)
-			{
-				close(fd[i][0]);
-				i++;
-			}
-		}
-		else
-		{
-			close(fd[i][0]);
-			close(fd[i][1]);
-			i++;
-		}
-	}
 }

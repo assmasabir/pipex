@@ -69,7 +69,7 @@ void	manage_pipes(int nb_fd, char **argv, t_params *tpar)
 	int	i;
 
 	i = 0;
-	fd = allocate_array(nb_fd +1);
+	fd = allocate_array(nb_fd + 1);
 	while (i < nb_fd)
 	{
 		if (pipe(fd[i]) == -1)

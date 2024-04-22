@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:51:30 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 22:43:18 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/22 18:54:50 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_error_and_exit(t_params *tpar, int **fd)
 	write(2, tpar->name_infile, ft_strlen(tpar->name_infile));
 	write(2, str, ft_strlen(str));
 	free_matrice_int(fd);
-	clean_up(tpar);	
+	clean_up(tpar);
 	free(tpar);
 	exit(EXIT_FAILURE);
 }
@@ -39,23 +39,17 @@ void	child_process(int **fd, int in_file, int out_file, t_params *tpar)
 	{
 		close_fds(fd, in_file, out_file, tpar->nb_fds);
 		if (dup2(out_file, STDOUT_FILENO) == -1)
-		{
-			free_matrice_int(fd);
-			clean_up(tpar);	
-			free(tpar);
-			perror(NULL);
-			exit(EXIT_FAILURE);
-		}
+			hundle_fail_of_dup2(fd, tpar);
 		close(out_file);
 		if (dup2(in_file, STDIN_FILENO) == -1)
-			{
-				print_error_and_exit(tpar, fd);
-			}
+		{
+			print_error_and_exit(tpar, fd);
+		}
 		close(in_file);
 		printf("%s\n", tpar->cmd[0]);
 		execve(tpar->path_cmd, tpar->cmd, tpar->env);
 		free_matrice_int(fd);
-		clean_up(tpar);	
+		clean_up(tpar);
 		free(tpar);
 		exit(EXIT_FAILURE);
 	}

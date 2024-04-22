@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/21 22:32:08 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/22 20:34:06 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ void	case_2(int **fd, t_params *tpar, char **argv, int *i)
 	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i + 3], tpar->env);
 	fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (fd[tpar->nb_fds][1] == -1)
+	{
+		clean_up(tpar);
+		free(tpar);
+		write(2, "permission denied:\n", 19);
+		exit(EXIT_FAILURE);
+	}
 	child_process(fd, fd[*i][0], fd[tpar->nb_fds][1], tpar);
 	clean_up(tpar);
 	close(fd[*i][1]);
@@ -93,12 +100,7 @@ void	manage_pipes(int nb_fd, char **argv, t_params *tpar)
 			case_3(fd, tpar, argv, &i);
 		i++;
 	}
-	i = 0;
-	while(fd[i])
-	{
-		close(fd[i][0]);
-		i++;
-	}
+	close_all(fd);
 	free_matrice_int(fd);
 }
 
@@ -113,10 +115,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		tpar = malloc(sizeof(t_params));
 		if (ft_strcmp(argv[1], "here_doc") == 0)
-		{
-			case_here_doc(tpar, argc);
-			argv++;
-		}
+			case_here_doc(tpar, argc, argv);
 		else
 			case_normal_file(tpar, argc, argv);
 		initialize = "initializig";
@@ -128,5 +127,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	else
 		write(2, error_message, strlen(error_message));
-	while(wait(NULL)!=-1);
+	while (wait(NULL) != -1)
+		;
 }
