@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:57:41 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/22 20:33:36 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:27:07 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	close_all(int **fd)
 	}
 }
 
-void	case_here_doc(t_params *tpar, int argc, char **argv)
+void	case_here_doc(t_params *tpar, int argc, char ***argv)
 {
 	tpar->nb_fds = argc - 5;
 	tpar->name_infile = "here_doc";
 	tpar->here_doc = 1;
-	argv++;
+	(*argv)++;
 }
 
 void	case_normal_file(t_params *tpar, int argc, char **argv)

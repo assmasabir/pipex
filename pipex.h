@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:33:49 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/22 20:33:52 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:29:09 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		close_fds(int **fd, int file_in, int file_out, int nb_fds);
 int			is_cmd_found(char **path_cmd, char *str, char *cmd);
 char		*ft_strdup(const char *str);
 void		close_all(int **fd);
-void		case_here_doc(t_params *tpar, int argc, char **argv);
+void		case_here_doc(t_params *tpar, int argc, char ***argv);
 void		case_normal_file(t_params *tpar, int argc, char **argv);
 int			**allocate_array(int nb_fd);
 void		free_matrice_int(int **nbr);

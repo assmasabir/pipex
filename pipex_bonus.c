@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/22 20:34:06 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:28:45 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	case_2(int **fd, t_params *tpar, char **argv, int *i)
 	child_process(fd, fd[*i][0], fd[tpar->nb_fds][1], tpar);
 	clean_up(tpar);
 	close(fd[*i][1]);
+	unlink(tpar->name_infile);
 }
 
 void	case_3(int **fd, t_params *tpar, char **argv, int *i)
@@ -115,7 +116,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		tpar = malloc(sizeof(t_params));
 		if (ft_strcmp(argv[1], "here_doc") == 0)
-			case_here_doc(tpar, argc, argv);
+			case_here_doc(tpar, argc, &argv);
 		else
 			case_normal_file(tpar, argc, argv);
 		initialize = "initializig";
