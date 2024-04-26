@@ -62,6 +62,15 @@ void	close_all(int **fd)
 
 void	case_here_doc(t_params *tpar, int argc, char ***argv)
 {
+	char	*error_message;
+
+	error_message = "Error message : wrong number of arguments\n";
+	if (argc == 5)
+	{
+		free(tpar);
+		write(2, error_message, strlen(error_message));
+		exit(EXIT_FAILURE);
+	}
 	tpar->nb_fds = argc - 5;
 	tpar->name_infile = "here_doc";
 	tpar->here_doc = 1;

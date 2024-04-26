@@ -88,6 +88,7 @@ void	manage_pipes(int nb_fd, char **argv, t_params *tpar)
 			case_3(fd, tpar, argv, &i);
 		i++;
 	}
+	close_all(fd);
 	free_matrice_int(fd);
 }
 
@@ -98,7 +99,7 @@ int	main(int argc, char **argv, char **env)
 	t_params	*tpar;
 
 	error_message = "Error message : wrong number of arguments!\n";
-	if (argc >= 5)
+	if (argc == 5)
 	{
 		tpar = malloc(sizeof(t_params));
 		case_normal_file(tpar, argc, argv);

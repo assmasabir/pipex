@@ -46,7 +46,6 @@ void	child_process(int **fd, int in_file, int out_file, t_params *tpar)
 			print_error_and_exit(tpar, fd);
 		}
 		close(in_file);
-		printf("%s\n", tpar->cmd[0]);
 		execve(tpar->path_cmd, tpar->cmd, tpar->env);
 		free_matrice_int(fd);
 		clean_up(tpar);
@@ -88,6 +87,7 @@ char	**return_cmd_arr(char **path_cmd, char *cmd, char **env)
 		if (cmd)
 			write(2, cmd, ft_strlen(cmd));
 		write(2, ": command not found\n", 20);
+		exit(127);
 	}
 	return (arr);
 }

@@ -46,11 +46,8 @@ void	case_2(int **fd, t_params *tpar, char **argv, int *i)
 	}
 	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i + 3], tpar->env);
 	if (tpar->here_doc == 1)
-	{
 		fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
 				O_CREAT | O_RDWR | O_APPEND, 0644);
-		unlink(tpar->name_infile);
-	}
 	else
 		fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -58,6 +55,8 @@ void	case_2(int **fd, t_params *tpar, char **argv, int *i)
 		print_error_and_free(tpar);
 	child_process(fd, fd[*i][0], fd[tpar->nb_fds][1], tpar);
 	clean_up(tpar);
+	if (tpar->here_doc == 1)
+		unlink(tpar->name_infile);
 	close(fd[*i][1]);
 }
 
