@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:33:49 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/24 18:29:09 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/26 18:17:21 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,4 @@ void		case_normal_file(t_params *tpar, int argc, char **argv);
 int			**allocate_array(int nb_fd);
 void		free_matrice_int(int **nbr);
 void		hundle_fail_of_dup2(int **fd, t_params *tpar);
+void		print_error_and_free(t_params *tpar);

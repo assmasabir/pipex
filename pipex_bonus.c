@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/24 18:28:45 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/26 18:17:48 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,14 @@ void	case_2(int **fd, t_params *tpar, char **argv, int *i)
 		tpar->path_cmd = NULL;
 	}
 	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i + 3], tpar->env);
-	fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
-			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (tpar->here_doc == 1)
+		fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
+				O_CREAT | O_RDWR | O_APPEND, 0644);
+	else
+		fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd[tpar->nb_fds][1] == -1)
-	{
-		clean_up(tpar);
-		free(tpar);
-		write(2, "permission denied:\n", 19);
-		exit(EXIT_FAILURE);
-	}
+		print_error_and_free(tpar);
 	child_process(fd, fd[*i][0], fd[tpar->nb_fds][1], tpar);
 	clean_up(tpar);
 	close(fd[*i][1]);

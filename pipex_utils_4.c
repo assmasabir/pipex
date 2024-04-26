@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:29:21 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/22 20:30:44 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/26 18:16:55 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,12 @@ void	close_fds(int **fd, int file_in, int file_out, int nb_fds)
 			i++;
 		}
 	}
+}
+
+void	print_error_and_free(t_params *tpar)
+{
+	clean_up(tpar);
+	free(tpar);
+	write(2, "permission denied:\n", 19);
+	exit(EXIT_FAILURE);
 }
