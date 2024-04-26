@@ -60,7 +60,7 @@ void	close_all(int **fd)
 	}
 }
 
-void	case_here_doc(t_params *tpar, int argc, char ***argv)
+void	case_here_doc(t_params *tpar, int argc, char ***argv, char **env)
 {
 	char	*error_message;
 
@@ -74,12 +74,14 @@ void	case_here_doc(t_params *tpar, int argc, char ***argv)
 	tpar->nb_fds = argc - 5;
 	tpar->name_infile = "here_doc";
 	tpar->here_doc = 1;
+	tpar->env = env;
 	(*argv)++;
 }
 
-void	case_normal_file(t_params *tpar, int argc, char **argv)
+void	case_normal_file(t_params *tpar, int argc, char **argv, char **env)
 {
 	tpar->nb_fds = argc - 4;
 	tpar->name_infile = argv[1];
 	tpar->here_doc = 0;
+	tpar->env = env;
 }

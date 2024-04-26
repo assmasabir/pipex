@@ -84,5 +84,5 @@ void	print_error_and_free(t_params *tpar)
 	clean_up(tpar);
 	free(tpar);
 	write(2, "permission denied:\n", 19);
-	exit(126);
+	exit(EXIT_FAILURE);
 }

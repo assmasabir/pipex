@@ -116,18 +116,20 @@ int	main(int argc, char **argv, char **env)
 	{
 		tpar = malloc(sizeof(t_params));
 		if (ft_strcmp(argv[1], "here_doc") == 0)
-			case_here_doc(tpar, argc, &argv);
+			case_here_doc(tpar, argc, &argv, env);
 		else
-			case_normal_file(tpar, argc, argv);
+			case_normal_file(tpar, argc, argv, env);
 		initialize = "initializig";
 		tpar->cmd = NULL;
 		tpar->path_cmd = ft_strdup(initialize);
-		tpar->env = env;
 		manage_pipes(tpar->nb_fds, argv, tpar);
 		free(tpar);
 	}
 	else
+	{
 		write(2, error_message, strlen(error_message));
+		exit(EXIT_FAILURE);
+	}
 	while (wait(NULL) != -1)
 		;
 }

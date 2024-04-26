@@ -102,16 +102,18 @@ int	main(int argc, char **argv, char **env)
 	if (argc == 5)
 	{
 		tpar = malloc(sizeof(t_params));
-		case_normal_file(tpar, argc, argv);
+		case_normal_file(tpar, argc, argv, env);
 		initialize = "initializig";
 		tpar->cmd = NULL;
 		tpar->path_cmd = ft_strdup(initialize);
-		tpar->env = env;
 		manage_pipes(tpar->nb_fds, argv, tpar);
 		free(tpar);
 	}
 	else
+	{
 		write(2, error_message, strlen(error_message));
+		exit(EXIT_FAILURE);
+	}
 	while (wait(NULL) != -1)
 		;
 }
