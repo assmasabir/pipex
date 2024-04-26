@@ -81,7 +81,10 @@ char	**return_cmd_arr(char **path_cmd, char *cmd, char **env)
 	arr = ft_split(cmd, ' ');
 	path = find_path(env);
 	if (path == NULL)
-		exit(-1);
+	{
+		write(2, ": command not found\n", 20);
+		exit(127);
+	}
 	if (is_cmd_found(path_cmd, path, arr[0]) == -1)
 	{
 		if (cmd)
