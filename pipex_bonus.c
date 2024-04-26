@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 23:08:47 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/26 18:17:48 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/26 20:04:25 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ void	case_2(int **fd, t_params *tpar, char **argv, int *i)
 	}
 	tpar->cmd = return_cmd_arr(&(tpar->path_cmd), argv[*i + 3], tpar->env);
 	if (tpar->here_doc == 1)
+	{
 		fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
 				O_CREAT | O_RDWR | O_APPEND, 0644);
+		unlink(tpar->name_infile);
+	}
 	else
 		fd[tpar->nb_fds][1] = open(argv[tpar->nb_fds + 3],
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -56,7 +59,6 @@ void	case_2(int **fd, t_params *tpar, char **argv, int *i)
 	child_process(fd, fd[*i][0], fd[tpar->nb_fds][1], tpar);
 	clean_up(tpar);
 	close(fd[*i][1]);
-	unlink(tpar->name_infile);
 }
 
 void	case_3(int **fd, t_params *tpar, char **argv, int *i)
