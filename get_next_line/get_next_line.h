@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:42:55 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/13 18:20:32 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/28 14:01:52 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strcpy(char *dest, const char *src);
 char	*free_and_join(char **reserve, char *buff);
 char	*ft_strjoin(char *str1, char *str2);
+int		ft_strncmp(char *s1, char *s2, unsigned int n);
 #endif

@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:55:14 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/22 20:31:11 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/28 13:33:49 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*find_path(char **en)
 	i = 0;
 	while (en[i])
 	{
-		if (strncmp(en[i], "PATH=", 5) == 0)
+		if (ft_strncmp(en[i], "PATH=", 5) == 0)
 			return (en[i]);
 		else
 			i++;

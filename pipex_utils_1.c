@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:51:30 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/22 18:54:50 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/28 14:06:39 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ void	clean_up(t_params *tpar)
 	free(tpar->path_cmd);
 }
 
-char	**return_cmd_arr(char **path_cmd, char *cmd, char **env)
+char	**return_cmd_arr(char **path_cmd, char *cmd, t_params *tpar)
 {
 	char	**arr;
 	char	*path;
 
 	arr = ft_split(cmd, ' ');
-	path = find_path(env);
+	path = find_path(tpar->env);
 	if (path == NULL)
 	{
 		write(2, ": command not found\n", 20);
@@ -90,7 +90,7 @@ char	**return_cmd_arr(char **path_cmd, char *cmd, char **env)
 		if (cmd)
 			write(2, cmd, ft_strlen(cmd));
 		write(2, ": command not found\n", 20);
-		exit(127);
+		tpar->cmd_not_found = 1;
 	}
 	return (arr);
 }

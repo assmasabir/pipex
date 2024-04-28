@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:33:49 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/26 18:17:21 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/28 14:01:29 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct Params
 	char	**env;
 	char	*name_infile;
 	int		here_doc;
+	int		cmd_not_found;
 }			t_params;
 
 char		**ft_split(const char *s, char c);
@@ -37,7 +38,7 @@ int			manage_here_doc(char **argv);
 int			ft_strcmp(char *s1, char *s2);
 void		clean_up(t_params *tpar);
 void		child_process(int **fd, int in_file, int out_file, t_params *tpar);
-char		**return_cmd_arr(char **path_cmd, char *cmd, char **env);
+char		**return_cmd_arr(char **path_cmd, char *cmd, t_params *tpar);
 char		*find_path(char **en);
 void		close_fds(int **fd, int file_in, int file_out, int nb_fds);
 int			is_cmd_found(char **path_cmd, char *str, char *cmd);

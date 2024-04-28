@@ -6,7 +6,7 @@
 /*   By: asabir <asabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:57:41 by asabir            #+#    #+#             */
-/*   Updated: 2024/04/24 18:27:07 by asabir           ###   ########.fr       */
+/*   Updated: 2024/04/28 13:34:25 by asabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	case_here_doc(t_params *tpar, int argc, char ***argv, char **env)
 	if (argc == 5)
 	{
 		free(tpar);
-		write(2, error_message, strlen(error_message));
+		write(2, error_message, ft_strlen(error_message));
 		exit(EXIT_FAILURE);
 	}
 	tpar->nb_fds = argc - 5;
